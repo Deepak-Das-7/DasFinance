@@ -4,7 +4,7 @@
     "slug": "dasFinance",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/pngs/panther.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,24 +13,28 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./src/pngs/logoDas.png",
+        "backgroundColor": "#fff"
+      },
+      "package": "com.deepak7.dasFinance"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+    "bundler": "metro",
+    "output": "static",
+    "favicon": "./src/pngs/logoDas.png",
+    "extra": {
+      "eas": {
+        "projectId": "bf553e3a-b36f-4850-af01-b954ab3f2514"
+      }
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./src/pngs/logoDas.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#fff"
         }
       ]
     ],
