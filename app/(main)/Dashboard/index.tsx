@@ -1,17 +1,16 @@
 import { View, FlatList, StyleSheet, Text } from 'react-native';
 import React from 'react';
 import { Colors } from '@/src/Colors';
-import BudgetOverview from '@/src/components/dashboard/BudgetOverview';
-import ExpenseTracker from '@/src/components/ExpenseTracker';
-import FinancialChart from '@/src/components/dashboard/FinancialChart';
-import QuickActions from '@/src/components/dashboard/QuickActions';
-import RecentTransactions from '@/src/components/dashboard/RecentTransactions';
-import Footer from '@/src/components/dashboard/Footer';
-import GradientBackground from '@/src/components/GradientBackground'; // Import the reusable background component
+import ExpenseTracker from '@/components/dashboard/ExpenseTracker';
+import FinancialChart from '@/components/dashboard/FinancialChart';
+import QuickActions from '@/components/dashboard/QuickActions';
+import RecentTransactions from '@/components/dashboard/RecentTransactions';
+import Footer from '@/components/dashboard/Footer';
+import GradientBackground from '@/components/GradientBackground'; // Import the reusable background component
+import BudgetMain from '@/components/dashboard/BudgetMain';
 
 const dashboardComponents = [
-    { id: '1', component: <ExpenseTracker /> },
-    { id: '2', component: <BudgetOverview /> },
+    { id: '1', component: <BudgetMain /> },
     { id: '3', component: <FinancialChart /> },
     { id: '4', component: <RecentTransactions /> },
     { id: '5', component: <QuickActions /> },

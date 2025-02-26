@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Colors } from '@/src/Colors';
-import GradientBackground from '@/src/components/GradientBackground';
+import GradientBackground from '@/components/GradientBackground';
 
 const transactions = [
     { id: '1', type: 'Debit', title: 'Grocery Shopping', amount: -2500, date: 'Feb 20, 2025' },

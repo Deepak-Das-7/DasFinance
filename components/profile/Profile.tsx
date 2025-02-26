@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Colors } from '@/src/Colors';
-import GradientBackground from '@/src/components/GradientBackground';
+import GradientBackground from '@/components/GradientBackground';
 
 const Profile = () => {
     return (
-        <GradientBackground>
-            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.profileImage} />
+        <View>
+            <Image source={{ uri: 'https://picsum.photos/302' }} style={styles.profileImage} />
             <Text style={styles.name}>John Doe</Text>
             <Text style={styles.email}>johndoe@example.com</Text>
 
@@ -17,7 +17,7 @@ const Profile = () => {
             <TouchableOpacity style={[styles.button, styles.logout]}>
                 <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
-        </GradientBackground>
+        </View>
 
     );
 };

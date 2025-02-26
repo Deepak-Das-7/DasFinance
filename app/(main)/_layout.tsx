@@ -10,8 +10,8 @@ import { Colors } from '@/src/Colors';
 const screens = [
   { name: 'Dashboard', icon: 'analytics' },
   { name: 'Transanction', icon: 'attach-money' },
-  { name: 'Setting', icon: 'settings' },
-  { name: 'Report', icon: 'report' }
+  { name: 'Report', icon: 'newspaper' },
+  { name: 'Setting', icon: 'settings' }
 ] as const;
 
 // Custom Bottom Tab Bar

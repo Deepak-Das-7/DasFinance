@@ -6,9 +6,9 @@ export default function RootLayout() {
     const checkAuth = async () => {
       const token = "das";
       if (token === "das") {
-        router.replace("/onboard/Notes");
-      } else {
         router.replace("/Dashboard");
+      } else {
+        router.replace("/onboard/Notes");
       }
     };
 

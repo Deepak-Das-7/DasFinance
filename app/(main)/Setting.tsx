@@ -1,8 +1,8 @@
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Colors } from '@/src/Colors';
-import GradientBackground from '@/src/components/GradientBackground';
-import Profile from '@/src/components/profile/Profile';
+import GradientBackground from '@/components/GradientBackground';
+import Profile from '@/components/profile/Profile';
 
 const Settings = () => {
     const [darkMode, setDarkMode] = useState(false);

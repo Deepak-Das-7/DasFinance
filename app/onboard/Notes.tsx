@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { View, Text, FlatList, Dimensions, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import OnboardingSlide from "@/src/components/onboard/OnboardingSlide";
+import OnboardingSlide from "@/components/onboard/OnboardingSlide";
 import { slides } from "@/src/contants/Slide";
 
 const { width } = Dimensions.get("window");
