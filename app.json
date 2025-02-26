@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dasFinance",
+    "name": "DasFinance",
     "slug": "dasFinance",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/pngs/das.png",
-        "backgroundColor": "#fff"
+        "backgroundColor": "transparent"
       },
       "package": "com.deepak7.dasFinance"
     },
@@ -34,7 +34,7 @@
           "image": "./src/pngs/logoDas.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#fff"
+          "backgroundColor": "transparent"
         }
       ]
     ],

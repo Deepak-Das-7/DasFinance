@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -42,12 +42,14 @@ const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => (
 
 // Root Layout
 export default function RootLayout() {
-  return (
+  return (<>
+    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
     <Tabs tabBar={CustomTabBar}>
       {screens.map(({ name }) => (
         <Tabs.Screen key={name} name={name} options={{ title: name, headerShown: false }} />
       ))}
     </Tabs>
+  </>
   );
 }
 

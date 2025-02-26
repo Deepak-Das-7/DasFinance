@@ -1,11 +1,12 @@
 import GradientBackground from '@/components/GradientBackground';
+import Header from '@/components/Header';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Report = () => {
     return (
         <GradientBackground>
-            <Text style={styles.title}>Financial Report</Text>
+            <Header title="Finance Report" />
             <Text style={styles.content}>This is where the financial report details will be displayed.</Text>
         </GradientBackground >
     );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Colors } from '@/src/Colors';
 import GradientBackground from '@/components/GradientBackground';
+import Header from '@/components/Header';
 
 const transactions = [
     { id: '1', type: 'Debit', title: 'Grocery Shopping', amount: -2500, date: 'Feb 20, 2025' },
@@ -34,7 +35,7 @@ const Transactions = () => {
     return (
         <GradientBackground>
 
-            <Text style={styles.header}>Transactions</Text>
+            <Header title="Transanctions" />
 
             {/* Table Header */}
             <View style={styles.tableHeader}>

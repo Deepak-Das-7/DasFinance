@@ -1,15 +1,16 @@
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import React from 'react';
 import { Colors } from '@/src/Colors';
-import ExpenseTracker from '@/components/dashboard/ExpenseTracker';
 import FinancialChart from '@/components/dashboard/FinancialChart';
 import QuickActions from '@/components/dashboard/QuickActions';
 import RecentTransactions from '@/components/dashboard/RecentTransactions';
 import Footer from '@/components/dashboard/Footer';
-import GradientBackground from '@/components/GradientBackground'; // Import the reusable background component
+import GradientBackground from '@/components/GradientBackground';
 import BudgetMain from '@/components/dashboard/BudgetMain';
+import Header from '@/components/Header';
 
 const dashboardComponents = [
+    { id: '0', component: <Header title="Finance Dashboard" /> }, // Header at the top
     { id: '1', component: <BudgetMain /> },
     { id: '3', component: <FinancialChart /> },
     { id: '4', component: <RecentTransactions /> },
@@ -20,7 +21,6 @@ const dashboardComponents = [
 const Dashboard = () => {
     return (
         <GradientBackground>
-            <Text style={styles.header}>Finance Dashboard</Text>
             <FlatList
                 data={dashboardComponents}
                 keyExtractor={(item) => item.id}
@@ -35,17 +35,10 @@ const Dashboard = () => {
 export default Dashboard;
 
 const styles = StyleSheet.create({
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: Colors.background.light,
-        textAlign: 'center',
-        marginBottom: 16,
-    },
     listContent: {
         paddingBottom: 100,
     },
     componentWrapper: {
-        marginBottom: 16,
+        marginBottom: 5,
     },
 });
