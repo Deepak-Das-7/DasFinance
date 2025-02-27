@@ -21,11 +21,6 @@
     "bundler": "metro",
     "output": "static",
     "favicon": "./src/pngs/logoDas.png",
-    "extra": {
-      "eas": {
-        "projectId": "bf553e3a-b36f-4850-af01-b954ab3f2514"
-      }
-    },
     "plugins": [
       "expo-router",
       [

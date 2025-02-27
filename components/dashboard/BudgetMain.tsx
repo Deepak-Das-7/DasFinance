@@ -8,7 +8,6 @@ import { router } from "expo-router";
 
 const BudgetMain = () => {
     const BudgetPageOpen = () => {
-        console.log("going")
         router.push("/(main)/Dashboard/Budget")
     };
 
