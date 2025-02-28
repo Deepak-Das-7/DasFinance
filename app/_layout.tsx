@@ -1,4 +1,4 @@
-import { Stack, router } from "expo-router";
+import { Slot, router } from "expo-router";
 import React from "react";
 import { useEffect } from "react";
 
@@ -7,14 +7,14 @@ export default function RootLayout() {
     const checkAuth = async () => {
       const token = "das";
       if (token === "das") {
-        router.replace("/onboard/Notes");
+        router.replace("/Notes");
       } else {
-        router.replace("/(main)/Dashboard");
+        router.replace("/Dashboard");
       }
     };
 
     checkAuth();
   }, []);
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return <Slot screenOptions={{ headerShown: false }} />;
 }

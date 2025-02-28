@@ -23,22 +23,22 @@ export const slides = [
         description: "Join us and explore the possibilities!",
         image: "https://picsum.photos/302",
     },
-    {
-        id: "5",
-        title: "Get Started Now",
-        description: "Join us and explore the possibilities!",
-        image: "https://picsum.photos/302",
-    },
-    {
-        id: "6",
-        title: "Get Started Now",
-        description: "Join us and explore the possibilities!",
-        image: "https://picsum.photos/302",
-    },
-    {
-        id: "7",
-        title: "Get Started Now",
-        description: "Join us and explore the possibilities!",
-        image: "https://picsum.photos/302",
-    }
+    // {
+    //     id: "5",
+    //     title: "Get Started Now",
+    //     description: "Join us and explore the possibilities!",
+    //     image: "https://picsum.photos/302",
+    // },
+    // {
+    //     id: "6",
+    //     title: "Get Started Now",
+    //     description: "Join us and explore the possibilities!",
+    //     image: "https://picsum.photos/302",
+    // },
+    // {
+    //     id: "7",
+    //     title: "Get Started Now",
+    //     description: "Join us and explore the possibilities!",
+    //     image: "https://picsum.photos/302",
+    // }
 ];

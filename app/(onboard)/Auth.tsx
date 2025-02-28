@@ -4,7 +4,7 @@ import { router } from 'expo-router'
 
 const Auth = () => {
     function handleNext(event: GestureResponderEvent): void {
-        router.replace("/(main)/Dashboard")
+        router.replace("/Dashboard")
 
     }
 
