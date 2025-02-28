@@ -15,7 +15,7 @@ const Onboarding = () => {
             flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
             setCurrentIndex(currentIndex + 1);
         } else {
-            router.replace("/Auth");
+            router.replace("/(onboard)/Auth");
         }
     };
 
