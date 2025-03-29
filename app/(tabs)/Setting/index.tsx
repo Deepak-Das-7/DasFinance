@@ -4,14 +4,12 @@ import { Colors } from '@/src/utils/Colors';
 import GradientBackground from '@/src/components/GradientBackground';
 import Profile from '@/src/components/profile/Profile';
 import DatabaseScreen from '@/src/components/profile/GetAllDBS';
-import AddDataScreen from '@/src/components/profile/AddData';
 
 const Settings = () => {
 
     const settingsComponents = [
         { id: '0', component: <Profile /> },
         { id: '1', component: <DatabaseScreen /> },
-        { id: '2', component: <AddDataScreen /> },
     ];
 
     return (
@@ -47,6 +45,6 @@ const styles = StyleSheet.create({
     },
     settingLabel: {
         fontSize: 18,
-        color: Colors.text.dark,
+        color: Colors.text.black,
     },
 });

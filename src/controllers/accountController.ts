@@ -6,11 +6,20 @@ export const createAccount = async (
   account_name: string,
   balance: number = 0
 ) => {
+  if (!account_name.trim()) {
+    throw new Error("Account name cannot be empty.");
+  }
+
+  if (balance < 0) {
+    throw new Error("Balance cannot be negative.");
+  }
+
   const result = await db.runAsync(
     "INSERT INTO accounts (account_name, balance) VALUES (?, ?)",
     [account_name, balance]
   );
-  return result.lastInsertRowId;
+
+  return result;
 };
 
 export const getAccounts = async (): Promise<IAccount[]> => {

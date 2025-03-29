@@ -25,7 +25,6 @@ export const createBudget = async (
 
     // Commit the transaction
     await db.execAsync("COMMIT");
-    console.log(result.lastInsertRowId);
     return result.lastInsertRowId;
   } catch (error) {
     // Rollback in case of an error

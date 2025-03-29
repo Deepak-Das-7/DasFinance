@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     email: {
         fontSize: 16,
-        color: Colors.text.dark,
+        color: Colors.text.black,
         marginBottom: 20,
     },
     button: {

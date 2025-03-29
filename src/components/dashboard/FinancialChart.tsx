@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 14,
-        color: Colors.text.dark,
+        color: Colors.text.black,
         fontStyle: "italic"
     },
     chartContainer: {

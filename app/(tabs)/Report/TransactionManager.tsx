@@ -1,33 +1,71 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Button, TextInput, Modal, StyleSheet } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    Button,
+    TextInput,
+    Modal,
+    StyleSheet,
+    TouchableOpacity,
+    Alert
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { getTransactions, createTransaction, deleteTransaction } from "@/src/controllers/transactionController";
 import { getBudgets } from "@/src/controllers/budgetController";
-import { ITransaction, IBudget } from "@/src/utils/types";
+import { getAccounts } from "@/src/controllers/accountController";
+import { ITransaction, IBudget, IAccount } from "@/src/utils/types";
 import { Colors } from "@/src/utils/Colors";
+import { Ionicons } from "@expo/vector-icons";
 
 const TransactionManager = () => {
     const [transactions, setTransactions] = useState<ITransaction[]>([]);
     const [budgets, setBudgets] = useState<IBudget[]>([]);
+    const [accounts, setAccounts] = useState<IAccount[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [amount, setAmount] = useState("");
     const [selectedBudget, setSelectedBudget] = useState<number | null>(null);
+    const [selectedAccount, setSelectedAccount] = useState<number | null>(null);
+    const [type, setType] = useState<"credit" | "debit">("debit");
+    const [note, setNote] = useState("");
 
     useEffect(() => {
         loadTransactions();
         loadBudgets();
+        loadAccounts();
     }, []);
 
     const loadTransactions = async () => setTransactions(await getTransactions());
     const loadBudgets = async () => setBudgets(await getBudgets());
+    const loadAccounts = async () => setAccounts(await getAccounts());
 
     const handleAdd = async () => {
-        if (!selectedBudget) return alert("Please select a budget");
-        await createTransaction(Number(amount), "debit", selectedBudget, selectedBudget, "Transaction Note");
-        setModalVisible(false);
-        loadTransactions();
+        if (!selectedBudget || !selectedAccount || !amount.trim()) {
+            Alert.alert("Error", "Please fill all fields.");
+            return;
+        }
+        try {
+            await createTransaction(Number(amount), type, selectedBudget, selectedAccount, note);
+            Alert.alert("Success", "Transaction added successfully!");
+            setAmount("");
+            setType("debit");
+            setNote("");
+            setModalVisible(false);
+            loadTransactions();
+        } catch (error) {
+            Alert.alert("Error", "Failed to add transaction.");
+        }
     };
-
+    const handleDelete = async (id: number) => {
+        Alert.alert("Confirm", "Are you sure you want to delete this entry?", [
+            { text: "Cancel", style: "cancel" },
+            {
+                text: "Delete",
+                style: "destructive",
+                onPress: async () => { deleteTransaction(id); loadTransactions() }
+            },
+        ]);
+    };
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Transactions</Text>
@@ -37,37 +75,73 @@ const TransactionManager = () => {
                 renderItem={({ item }) => (
                     <View style={styles.item}>
                         <Text>{item.type.toUpperCase()} - ₹{item.amount}</Text>
-                        <Button title="Delete" color="red" onPress={async () => { await deleteTransaction(item.id); loadTransactions(); }} />
+                        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)} >
+                            <Text style={styles.buttonText}>Delete</Text>
+                        </TouchableOpacity>
                     </View>
                 )}
             />
-            <Button title="Add Transaction" onPress={() => setModalVisible(true)} />
+            <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)} >
+                <Text style={styles.buttonText}>Add Transanction</Text>
+            </TouchableOpacity>
 
             <Modal visible={modalVisible} transparent>
-                <View style={styles.modal}>
-                    <View style={styles.modalContent}>
+                <View style={styles.overlay}>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.header}>
+                            <Text style={styles.modalTitle}>Add Transanction</Text>
+                            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                                <Ionicons name="close" size={20} color={Colors.text.dark} />
+                            </TouchableOpacity>
+                        </View>
+                        <Text style={styles.label}>Amount</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder="Amount"
+                            placeholder="Enter amount"
+                            placeholderTextColor={Colors.placeholder}
                             keyboardType="numeric"
+                            value={amount}
                             onChangeText={setAmount}
                         />
 
-                        <Text>Select Budget:</Text>
-                        <Picker
-                            selectedValue={selectedBudget}
-                            onValueChange={(value) => setSelectedBudget(value)}
-                            style={styles.picker}
-                        >
-                            {budgets.map((budget) => (
-                                <Picker.Item key={budget.id} label={budget.budget_name} value={budget.id} />
-                            ))}
-                        </Picker>
-
-                        <View style={styles.buttonContainer}>
-                            <Button title="Create" onPress={handleAdd} />
-                            <Button title="Close" color="gray" onPress={() => setModalVisible(false)} />
+                        <Text style={styles.label}>Transaction Type</Text>
+                        <View style={styles.pickerContainer}>
+                            <Picker selectedValue={type} onValueChange={setType} style={styles.picker}>
+                                <Picker.Item label="Debit" value="debit" />
+                                <Picker.Item label="Credit" value="credit" />
+                            </Picker>
                         </View>
+
+                        <Text style={styles.label}>Select Budget</Text>
+                        <View style={styles.pickerContainer}>
+                            <Picker selectedValue={selectedBudget} onValueChange={setSelectedBudget} style={styles.picker}>
+                                {budgets.map((budget) => (
+                                    <Picker.Item key={budget.id} label={budget.budget_name} value={budget.id} />
+                                ))}
+                            </Picker>
+                        </View>
+
+                        <Text style={styles.label}>Select Account</Text>
+                        <View style={styles.pickerContainer}>
+                            <Picker selectedValue={selectedAccount} onValueChange={setSelectedAccount} style={styles.picker}>
+                                {accounts.map((account) => (
+                                    <Picker.Item key={account.id} label={account.account_name} value={account.id} />
+                                ))}
+                            </Picker>
+                        </View>
+
+                        <Text style={styles.label}>Note (optional)</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter a note"
+                            placeholderTextColor={Colors.placeholder}
+                            value={note}
+                            onChangeText={setNote}
+                        />
+
+                        <TouchableOpacity style={styles.button} onPress={handleAdd}>
+                            <Text style={styles.buttonText}>Submit Transaction</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -87,11 +161,16 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 4,
     },
+    deleteButton: {
+        padding: 3,
+        backgroundColor: Colors.status.error,
+        borderRadius: 7
+    },
     title: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 12,
-        color: Colors.text.dark,
+        color: Colors.text.black,
     },
     item: {
         flexDirection: "row",
@@ -101,28 +180,41 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: Colors.border.light,
     },
-    buttonContainer: {
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        marginTop: 12,
-    },
-    modal: {
+    overlay: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: Colors.overlay,
+        backgroundColor: Colors.overlay
     },
-    modalContent: {
-        width: 320,
+    modalContainer: {
+        width: "90%",
+        maxWidth: 400,
         backgroundColor: Colors.background.light,
         padding: 20,
-        borderRadius: 12,
+        borderRadius: 16,
+    },
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
-        shadowColor: Colors.shadow.dark,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 6,
-        elevation: 5,
+        marginBottom: 10,
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    closeButton: {
+        padding: 5,
+        borderRadius: 20,
+        backgroundColor: Colors.background.dark,
+    },
+    content: {
+        marginTop: 10,
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: "600",
+        marginBottom: 5,
     },
     input: {
         width: "100%",
@@ -130,16 +222,62 @@ const styles = StyleSheet.create({
         borderColor: Colors.border.light,
         padding: 12,
         borderRadius: 10,
-        marginBottom: 12,
+        marginBottom: 15,
         backgroundColor: Colors.background.light,
-        color: Colors.text.dark,
+    },
+    button: {
+        backgroundColor: Colors.button.primary,
+        paddingVertical: 12,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+    buttonText: {
+        color: "#fff",
         fontSize: 16,
+        fontWeight: "bold",
+    },
+
+    modal: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,0.5)",
+    },
+    modalContent: {
+        width: 350,
+        backgroundColor: Colors.background.light,
+        padding: 20,
+        borderRadius: 12,
+        shadowColor: Colors.shadow.dark,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
+        elevation: 5,
+    },
+
+    pickerContainer: {
+        borderWidth: 1,
+        borderColor: Colors.border.light,
+        borderRadius: 10,
+        backgroundColor: Colors.background.light,
+        marginBottom: 15,
     },
     picker: {
-        width: "100%",
-        backgroundColor: Colors.background.light,
+        height: 50,
+        color: Colors.text.black,
+    },
+
+    cancelButton: {
+        backgroundColor: Colors.button.secondary,
+        paddingVertical: 12,
         borderRadius: 10,
-        marginTop: 8,
+        alignItems: "center",
+        marginTop: 10,
+    },
+    cancelButtonText: {
+        color: Colors.text.light,
+        fontSize: 16,
+        fontWeight: "bold",
     },
 });
 

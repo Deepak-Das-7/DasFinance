@@ -9,7 +9,7 @@ import BudgetMain from '@/src/components/dashboard/BudgetMain';
 import Header from '@/src/components/Header';
 
 const dashboardComponents = [
-    { id: '0', component: <Header title="Finance Dashboard" /> }, // Header at the top
+    { id: '0', component: <Header title="Finance Dashboard" /> },
     { id: '1', component: <BudgetMain /> },
     { id: '3', component: <FinancialChart /> },
     { id: '4', component: <RecentTransactions /> },
