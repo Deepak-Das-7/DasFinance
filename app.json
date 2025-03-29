@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "DasPay",
+    "name": "DasFinance",
     "slug": "dasFinance",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,25 +13,26 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/pngs/das.png",
+        "foregroundImage": "./src/pngs/DasPay.png",
         "backgroundColor": "#fff"
       },
       "package": "com.deepak7.dasFinance"
     },
     "bundler": "metro",
     "output": "static",
-    "favicon": "./src/pngs/logoDas.png",
+    "favicon": "./src/pngs/DasPay.png",
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./src/pngs/logoDas.png",
+          "image": "./src/pngs/DasPay.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#fff"
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true
