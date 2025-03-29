@@ -5,10 +5,9 @@ import { Colors } from "@/src/utils/Colors";
 
 interface Props {
     onChange: (key: string, value: string | number) => void;
-    type: string | undefined;
 }
 
-const TransactionForm: React.FC<Props> = ({ onChange, type }) => (
+const TransactionForm: React.FC<Props> = ({ onChange }) => (
     <View style={styles.container}>
         <Text style={styles.label}>Account ID:</Text>
         <TextInput style={styles.input} keyboardType="numeric" onChangeText={(value) => onChange("account_id", Number(value))} />
@@ -17,7 +16,7 @@ const TransactionForm: React.FC<Props> = ({ onChange, type }) => (
         <TextInput style={styles.input} keyboardType="numeric" onChangeText={(value) => onChange("amount", Number(value))} />
 
         <Text style={styles.label}>Transaction Type:</Text>
-        <Picker selectedValue={type} onValueChange={(value) => onChange("type", value)} style={styles.picker}>
+        <Picker selectedValue={"Debit"} onValueChange={(value) => onChange("type", value)} style={styles.picker}>
             <Picker.Item label="Debit" value="debit" />
             <Picker.Item label="Credit" value="credit" />
         </Picker>

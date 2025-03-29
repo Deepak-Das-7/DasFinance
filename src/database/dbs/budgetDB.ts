@@ -1,9 +1,9 @@
 import * as SQLite from "expo-sqlite";
 
-const budgetDB = SQLite.openDatabaseSync("budget");
+const db = SQLite.openDatabaseSync("das");
 
 export const setupBudgetDB = async () => {
-  await budgetDB.execAsync(`
+  await db.execAsync(`
     CREATE TABLE IF NOT EXISTS budgets (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       budget_name TEXT NOT NULL,
@@ -21,5 +21,3 @@ export const setupBudgetDB = async () => {
     END;
   `);
 };
-
-export default budgetDB;

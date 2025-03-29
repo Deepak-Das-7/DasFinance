@@ -1,29 +1,45 @@
 import * as SQLite from "expo-sqlite";
-
-const budgetDB = SQLite.openDatabaseSync("budget");
+const db = SQLite.openDatabaseSync("das");
 
 export const createBudget = async (
   amount: number,
   account_id: number,
   budget_name: string
 ) => {
-  const result = await budgetDB.runAsync(
-    "INSERT INTO budgets (amount, account_id, budget_name) VALUES (?, ?, ?)",
-    [amount, account_id, budget_name]
-  );
-  return result.lastInsertRowId;
+  // Start a transaction for atomicity
+  await db.execAsync("BEGIN TRANSACTION");
+
+  try {
+    // Insert the budget into the budgets table
+    const result = await db.runAsync(
+      "INSERT INTO budgets (amount, account_id, budget_name) VALUES (?, ?, ?)",
+      [amount, account_id, budget_name]
+    );
+
+    // Reduce the balance of the corresponding account
+    await db.runAsync(
+      "UPDATE accounts SET balance = balance - ? WHERE id = ?",
+      [amount, account_id]
+    );
+
+    // Commit the transaction
+    await db.execAsync("COMMIT");
+    console.log(result.lastInsertRowId);
+    return result.lastInsertRowId;
+  } catch (error) {
+    // Rollback in case of an error
+    await db.execAsync("ROLLBACK");
+    console.error("Error creating budget:", error);
+    throw error;
+  }
 };
 
 export const getBudgets = async () => {
-  return await budgetDB.getAllAsync(
-    "SELECT * FROM budgets ORDER BY created_at DESC"
-  );
+  return await db.getAllAsync("SELECT * FROM budgets ORDER BY created_at DESC");
 };
 
 export const getBudgetById = async (id: number) => {
-  return await budgetDB.getFirstAsync("SELECT * FROM budgets WHERE id = ?", [
-    id,
-  ]);
+  return await db.getFirstAsync("SELECT * FROM budgets WHERE id = ?", [id]);
 };
 
 export const updateBudget = async (
@@ -31,12 +47,12 @@ export const updateBudget = async (
   amount: string,
   budget_name: string
 ) => {
-  return await budgetDB.runAsync(
+  return await db.runAsync(
     "UPDATE budgets SET amount = ?, budget_name = ? WHERE id = ?",
     [amount, budget_name, id]
   );
 };
 
 export const deleteBudget = async (id: number) => {
-  return await budgetDB.runAsync("DELETE FROM budgets WHERE id = ?", [id]);
+  return await db.runAsync("DELETE FROM budgets WHERE id = ?", [id]);
 };

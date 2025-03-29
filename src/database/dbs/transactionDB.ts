@@ -1,9 +1,9 @@
 import * as SQLite from "expo-sqlite";
 
-const transactionDB = SQLite.openDatabaseSync("transaction");
+const db = SQLite.openDatabaseSync("das");
 
 export const setupTransactionDB = async () => {
-  await transactionDB.execAsync(`
+  await db.execAsync(`
     CREATE TABLE IF NOT EXISTS transactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       amount REAL NOT NULL,
@@ -23,5 +23,3 @@ export const setupTransactionDB = async () => {
     END;
   `);
 };
-
-export default transactionDB;

@@ -1,37 +1,36 @@
 import * as SQLite from "expo-sqlite";
-
-const accountDB = SQLite.openDatabaseSync("account");
+import { IAccount } from "../utils/types";
+const db = SQLite.openDatabaseSync("das");
 
 export const createAccount = async (
   account_name: string,
   balance: number = 0
 ) => {
-  const result = await accountDB.runAsync(
+  const result = await db.runAsync(
     "INSERT INTO accounts (account_name, balance) VALUES (?, ?)",
     [account_name, balance]
   );
   return result.lastInsertRowId;
 };
 
-export const getAccounts = async () => {
-  return await accountDB.getAllAsync(
+export const getAccounts = async (): Promise<IAccount[]> => {
+  const results = await db.getAllAsync(
     "SELECT * FROM accounts ORDER BY created_at DESC"
   );
+  return results as IAccount[];
 };
 
 export const getAccountById = async (id: number) => {
-  return await accountDB.getFirstAsync("SELECT * FROM accounts WHERE id = ?", [
+  return await db.getFirstAsync("SELECT * FROM accounts WHERE id = ?", [id]);
+};
+
+export const updateAccountBalance = async (id: number, balance: number) => {
+  return await db.runAsync("UPDATE accounts SET balance = ? WHERE id = ?", [
+    balance,
     id,
   ]);
 };
 
-export const updateAccountBalance = async (id: number, balance: number) => {
-  return await accountDB.runAsync(
-    "UPDATE accounts SET balance = ? WHERE id = ?",
-    [balance, id]
-  );
-};
-
 export const deleteAccount = async (id: number) => {
-  return await accountDB.runAsync("DELETE FROM accounts WHERE id = ?", [id]);
+  return await db.runAsync("DELETE FROM accounts WHERE id = ?", [id]);
 };

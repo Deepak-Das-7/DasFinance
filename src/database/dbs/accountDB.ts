@@ -1,9 +1,9 @@
 import * as SQLite from "expo-sqlite";
 
-const accountDB = SQLite.openDatabaseSync("account");
+const db = SQLite.openDatabaseSync("das");
 
 export const setupAccountDB = async () => {
-  await accountDB.execAsync(`
+  await db.execAsync(`
     CREATE TABLE IF NOT EXISTS accounts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       account_name TEXT NOT NULL,

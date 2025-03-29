@@ -74,7 +74,7 @@ export default function AddDataScreen() {
 
             <AddDataModal visible={modalVisible} onClose={closeModal} onSubmit={handleSubmit}>
                 {selectedForm === "accounts" && <AccountForm onChange={handleInputChange} />}
-                {selectedForm === "transactions" && <TransactionForm onChange={handleInputChange} type={formData.type} />}
+                {selectedForm === "transactions" && <TransactionForm onChange={handleInputChange} />}
                 {selectedForm === "budgets" && <BudgetForm onChange={handleInputChange} />}
             </AddDataModal>
         </View>
