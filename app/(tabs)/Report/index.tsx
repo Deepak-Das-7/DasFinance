@@ -1,31 +1,23 @@
-import GradientBackground from '@/src/components/GradientBackground';
-import Header from '@/src/components/Header';
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, FlatList } from "react-native";
+import AccountManager from "./AccountManager";
+import BudgetManager from "./BudgetManager";
+import TransactionManager from "./TransactionManager";
 
-const Report = () => {
+const components = [
+    { id: "accounts", component: <AccountManager /> },
+    { id: "budgets", component: <BudgetManager /> },
+    { id: "transactions", component: <TransactionManager /> },
+];
+
+const AdminPanel = () => {
     return (
-        <GradientBackground>
-            <Header title="Finance Report" />
-            <Text style={styles.content}>This is where the financial report details will be displayed.</Text>
-        </GradientBackground >
+        <FlatList
+            data={components}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <View>{item.component}</View>}
+        />
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    content: {
-        fontSize: 16,
-    },
-});
-
-export default Report;
+export default AdminPanel;

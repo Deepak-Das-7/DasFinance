@@ -1,10 +1,11 @@
 import * as SQLite from "expo-sqlite";
+import { IBudget } from "../utils/types";
 const db = SQLite.openDatabaseSync("das");
 
 export const createBudget = async (
-  amount: number,
+  budget_name: string,
   account_id: number,
-  budget_name: string
+  amount: number
 ) => {
   // Start a transaction for atomicity
   await db.execAsync("BEGIN TRANSACTION");
@@ -34,8 +35,11 @@ export const createBudget = async (
   }
 };
 
-export const getBudgets = async () => {
-  return await db.getAllAsync("SELECT * FROM budgets ORDER BY created_at DESC");
+export const getBudgets = async (): Promise<IBudget[]> => {
+  const results = await db.getAllAsync(
+    "SELECT * FROM budgets ORDER BY created_at DESC"
+  );
+  return results as IBudget[];
 };
 
 export const getBudgetById = async (id: number) => {

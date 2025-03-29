@@ -45,9 +45,9 @@ export default function AddDataScreen() {
                 );
             } else if (selectedForm === "budgets") {
                 await createBudget(
-                    Number(formData.amount) ?? 0,
+                    formData.budget_name ?? "Study",
                     Number(formData.account_id) ?? 0,
-                    formData.budget_name ?? "Study"
+                    Number(formData.amount) ?? 0
                 );
             }
             Alert.alert("Success", `${selectedForm} added successfully!`);
