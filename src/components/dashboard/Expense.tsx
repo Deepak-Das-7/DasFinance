@@ -1,36 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "@/src/utils/Colors";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import GradientBackground from "../GradientBackground";
-import { IAccount } from "@/src/utils/types";
+import { IBudget } from "@/src/utils/types";
+import { getBudgets } from "@/src/controllers/budgetController";
+import { useFocusEffect } from "expo-router";
 
 const Expense = () => {
-    const [account, setAccount] = useState<IAccount>();
+    const [totalBalance, setTotalBalance] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        loadAccount();
-    }, []);
-
-    const loadAccount = async () => {
+    const loadAccounts = async () => {
         setLoading(true);
-        // const data = await fetchDefaultAccount(userId);
-        // setAccount(data);
+        const budgets = await getBudgets();
+        const total = budgets.reduce((sum: number, acc: IBudget) => sum + acc.amount, 0);
+        setTotalBalance(total);
         setLoading(false);
     };
 
+    useFocusEffect(
+        useCallback(() => {
+            loadAccounts();
+        }, [])
+    );
 
     return (
         <View style={styles.container}>
             <GradientBackground colors={[Colors.status.error, Colors.status.warning]} gradientStyle={styles.box}>
+                <View style={styles.amountBox}>
+                    <MaterialIcons name="currency-rupee" size={24} color="white" />
+                    <Text style={styles.amount}>{totalBalance}</Text>
+                </View>
                 <View style={styles.titleBox}>
                     <MaterialIcons name="money-off" size={24} color={Colors.button.primary} />
                     <Text style={styles.title}>Total Expenses</Text>
-                </View>
-                <View style={styles.amountBox}>
-                    <MaterialIcons name="currency-rupee" size={24} color="white" />
-                    <Text style={styles.amount}>{account?.balance}</Text>
                 </View>
             </GradientBackground>
         </View>
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         height: 70, // Fixed height for all cards
-
     },
     titleBox: {
         flexDirection: "row",

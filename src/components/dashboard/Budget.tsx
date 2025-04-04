@@ -28,13 +28,13 @@ const Budget = () => {
     return (
         <View style={styles.container}>
             <GradientBackground colors={[Colors.status.success, Colors.status.success, Colors.status.warning]} gradientStyle={styles.box}>
-                <View style={styles.titleBox}>
-                    <Ionicons name="wallet" size={24} color={Colors.button.primary} />
-                    <Text style={styles.title}>NET Budget</Text>
-                </View>
                 <View style={styles.amountBox}>
                     <MaterialIcons name="currency-rupee" size={24} color="white" />
                     <Text style={styles.amount}>{totalBalance}</Text>
+                </View>
+                <View style={styles.titleBox}>
+                    <Ionicons name="wallet" size={24} color={Colors.button.primary} />
+                    <Text style={styles.title}>NET Budget</Text>
                 </View>
             </GradientBackground>
         </View>

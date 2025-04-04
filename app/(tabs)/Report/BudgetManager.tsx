@@ -41,7 +41,7 @@ const BudgetManager = () => {
         }
         await createBudget(budgetName, selectedAccount, Number(amount));
         setModalVisible(false);
-        loadBudgets();
+        await loadBudgets();
         setBudgetName("");
         setAmount("");
     };

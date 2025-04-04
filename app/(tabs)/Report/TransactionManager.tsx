@@ -51,7 +51,7 @@ const TransactionManager = () => {
             setType("debit");
             setNote("");
             setModalVisible(false);
-            loadTransactions();
+            await loadTransactions();
         } catch (error) {
             Alert.alert("Error", "Failed to add transaction.");
         }

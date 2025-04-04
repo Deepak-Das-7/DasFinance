@@ -34,7 +34,7 @@ const AccountManager = () => {
             setAccountName("");
             setBalance("");
             setModalVisible(false);
-            loadAccounts();
+            await loadAccounts();
         } catch (error) {
             Alert.alert("Error", "Failed to create account.");
         }
